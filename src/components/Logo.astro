@@ -1,0 +1,19 @@
+---
+interface Props { light?: boolean; compact?: boolean }
+const { light = false, compact = false } = Astro.props;
+---
+
+<a href="#top" class:list={["group inline-flex items-center gap-3", light ? "text-white" : "text-ink"]}>
+  <svg viewBox="0 0 56 56" class="h-11 w-11 shrink-0" aria-hidden="true">
+    <circle cx="28" cy="28" r="26.5" fill={light ? "rgba(255,255,255,.08)" : "#f7f3ec"} stroke={light ? "rgba(255,255,255,.45)" : "rgba(38,51,47,.22)"}/>
+    <path d="M10 34c8-12 28-12 36 0" fill="none" stroke="#c65a4e" stroke-width="4" stroke-linecap="round"/>
+    <path d="M9 38h38M14 43c8-2 20-2 28 0" fill="none" stroke={light ? "#cddbd5" : "#667e76"} stroke-width="2" stroke-linecap="round"/>
+    <circle cx="18" cy="18" r="3.3" fill="#e9c9ce"/><circle cx="28" cy="14.5" r="3.3" fill="#e9c9ce"/><circle cx="38" cy="19" r="3.3" fill="#e9c9ce"/>
+  </svg>
+  {!compact && (
+    <span class="leading-none">
+      <span class="serif block text-[1.06rem] font-semibold tracking-[0.08em]">茂原公園ガイド</span>
+      <span class:list={["mt-1 block text-[0.58rem] font-bold tracking-[0.24em]", light ? "text-white/60" : "text-ink/50"]}>MOBARA PARK GUIDE</span>
+    </span>
+  )}
+</a>

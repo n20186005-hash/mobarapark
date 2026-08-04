@@ -1,0 +1,61 @@
+---
+import { getImage } from "astro:assets";
+import heroImage from "../assets/photos/mobara-park-panorama.jpg";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pathname?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = "茂原公園ガイド｜桜・弁天湖・散策コース・駐車場案内",
+  description = "千葉県茂原市の茂原公園を歩くための旅行ガイド。弁天湖と弁天橋、桜の見頃、散策コース、駐車場、子ども向け施設、季節の花を写真と地図で案内します。",
+  pathname = Astro.url.pathname,
+  structuredData,
+} = Astro.props;
+
+const ogImage = await getImage({ src: heroImage, width: 1200, height: 630, fit: "cover", format: "jpg", quality: 82 });
+const canonical = new URL(pathname, Astro.site);
+const ogUrl = new URL(ogImage.src, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="茂原公園ガイド" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="桜の季節、高台から見下ろす茂原公園の弁天湖と朱色の弁天橋" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="fixed left-4 top-3 z-[120] -translate-y-20 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition focus:translate-y-0">本文へ移動</a>
+    <slot />
+  </body>
+</html>

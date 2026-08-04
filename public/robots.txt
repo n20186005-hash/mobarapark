@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mobara-park-guide.workers.dev/sitemap-index.xml

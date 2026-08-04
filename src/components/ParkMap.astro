@@ -1,0 +1,35 @@
+<div class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#20342f] p-4 text-white shadow-2xl shadow-ink/15 sm:p-8">
+  <div class="absolute left-6 top-6 z-10 rounded-full bg-white/10 px-3 py-1.5 text-[0.62rem] font-bold tracking-[0.14em] backdrop-blur">SIMPLIFIED MAP</div>
+  <svg viewBox="0 0 820 600" class="h-auto w-full" role="img" aria-labelledby="map-title map-desc">
+    <title id="map-title">茂原公園の簡易マップ</title>
+    <desc id="map-desc">弁天湖を中心に、第1駐車場、弁天橋、八橋、展望デッキ、第1広場、美術館の位置と三つの散策コースを示しています。</desc>
+    <defs>
+      <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity=".22"/></filter>
+      <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#fff" opacity=".08"/></pattern>
+    </defs>
+    <rect width="820" height="600" rx="30" fill="url(#dots)"/>
+    <path d="M90 302C103 174 239 95 371 112c93 12 118 66 214 69 88 2 140 73 116 160-25 89-151 154-264 139-99-13-162 34-249-5C99 436 82 382 90 302Z" fill="#6f8e84" opacity=".16"/>
+    <path d="M183 243c64-61 214-82 317-46 86 31 125 100 82 155-39 49-135 65-228 56-105-10-209-74-171-165Z" fill="#8fb0a7" opacity=".8" stroke="#d7e5df" stroke-width="2"/>
+    <path d="M167 227c63-80 236-107 357-56 107 44 159 135 97 220-47 64-161 92-272 72-109-20-226-116-182-236Z" fill="none" stroke="#d8ded5" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 14"/>
+    <path id="route-lake" d="M168 247c72-69 220-90 329-49 79 30 119 91 82 145-37 53-132 75-226 62-102-13-213-88-185-158Z" fill="none" stroke="#ef8c7f" stroke-width="7" stroke-linecap="round" opacity=".95"/>
+    <path d="M446 390c-13-54 21-115 87-151" fill="none" stroke="#f0d2a9" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 12"/>
+    <path d="M535 205c36-53 88-77 141-82" fill="none" stroke="#a7c3b5" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 12"/>
+    <path d="M342 277c38 2 92 8 139 43" fill="none" stroke="#c9574b" stroke-width="15" stroke-linecap="round" filter="url(#shadow)"/>
+    <path d="M345 272c38 1 92 7 138 41" fill="none" stroke="#ef887c" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(139 210)"><circle r="19" fill="#f9f4ec"/><text y="5" text-anchor="middle" fill="#26332f" font-size="15" font-weight="700">P1</text></g>
+    <g transform="translate(390 276)"><circle r="19" fill="#b64b40" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" fill="white" font-size="15" font-weight="700">1</text></g>
+    <g transform="translate(276 372)"><circle r="19" fill="#b64b40" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" fill="white" font-size="15" font-weight="700">2</text></g>
+    <g transform="translate(540 208)"><circle r="19" fill="#b64b40" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" fill="white" font-size="15" font-weight="700">3</text></g>
+    <g transform="translate(674 122)"><circle r="19" fill="#f0d2a9"/><text y="5" text-anchor="middle" fill="#26332f" font-size="15" font-weight="700">4</text></g>
+    <g transform="translate(603 433)"><rect x="-24" y="-19" width="48" height="38" rx="6" fill="#f9f4ec"/><path d="M-15 8V-7L0-15 15-7V8" fill="none" stroke="#26332f" stroke-width="3"/></g>
+    <g fill="#fff" font-family="sans-serif" font-size="14" font-weight="700">
+      <text x="109" y="178">第1駐車場</text><text x="367" y="244">弁天橋</text><text x="223" y="413">八橋</text><text x="556" y="181">北側散策路</text><text x="625" y="88">展望デッキ</text><text x="629" y="440">美術館</text>
+    </g>
+    <text x="342" y="335" fill="#f3f7f5" opacity=".9" font-family="serif" font-size="22" letter-spacing="4">弁天湖</text>
+  </svg>
+  <div class="grid gap-3 border-t border-white/10 pt-5 text-xs text-white/70 sm:grid-cols-3">
+    <span><i class="mr-2 inline-block h-1.5 w-6 rounded-full bg-[#ef8c7f]"></i>湖畔コース</span>
+    <span><i class="mr-2 inline-block h-1.5 w-6 rounded-full bg-[#f0d2a9]"></i>眺望コース</span>
+    <span><i class="mr-2 inline-block h-1.5 w-6 rounded-full bg-[#a7c3b5]"></i>文化コース</span>
+  </div>
+</div>

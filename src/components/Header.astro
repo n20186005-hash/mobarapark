@@ -1,0 +1,46 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<div class="relative z-50" id="top">
+  <div class="bg-ink px-3 py-2 text-center text-[0.68rem] font-medium tracking-[0.08em] text-white/85 sm:text-xs">
+    <span class="mr-2 inline-block rounded-full bg-white/10 px-2 py-0.5 text-[0.58rem] font-bold tracking-[0.16em] text-sakura">SEASON NOTE</span>
+    夏の散策は朝夕がおすすめです
+    <a href="#today" class="ml-2 underline decoration-white/30 underline-offset-4 hover:decoration-white">今日の案内</a>
+  </div>
+  <header class="border-b border-ink/10 bg-paper/92 backdrop-blur-xl">
+    <div class="container-site flex h-[76px] items-center justify-between gap-6">
+      <Logo />
+      <nav class="hidden items-center gap-6 text-[0.76rem] font-bold tracking-[0.06em] lg:flex" aria-label="メインナビゲーション">
+        <a class="transition hover:text-vermilion" href="#seasons">桜・花ごよみ</a>
+        <a class="transition hover:text-vermilion" href="#walk">園内を歩く</a>
+        <a class="transition hover:text-vermilion" href="#highlights">見どころ</a>
+        <a class="transition hover:text-vermilion" href="#access">アクセス</a>
+        <a class="transition hover:text-vermilion" href="#family">子ども・設備</a>
+      </nav>
+      <div class="hidden items-center gap-2 lg:flex">
+        <a href="#parking" class="rounded-full border border-ink/20 px-4 py-2.5 text-[0.7rem] font-bold tracking-[0.05em] transition hover:border-vermilion hover:text-vermilion">駐車場を見る</a>
+        <a href="#planner" class="rounded-full bg-vermilion px-4 py-2.5 text-[0.7rem] font-bold tracking-[0.05em] text-white transition hover:bg-vermilion-dark">コースを選ぶ</a>
+      </div>
+      <details class="group relative lg:hidden">
+        <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-ink/15" aria-label="メニューを開く">
+          <span class="relative h-3.5 w-5 before:absolute before:left-0 before:top-0 before:h-px before:w-5 before:bg-ink after:absolute after:bottom-0 after:left-0 after:h-px after:w-5 after:bg-ink"><span class="absolute left-0 top-1/2 h-px w-5 -translate-y-1/2 bg-ink"></span></span>
+        </summary>
+        <nav class="absolute right-0 top-14 w-64 rounded-2xl border border-ink/10 bg-[#faf7f0] p-3 shadow-2xl shadow-ink/15" aria-label="モバイルナビゲーション">
+          <a class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-paper-deep" href="#today">今日の案内</a>
+          <a class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-paper-deep" href="#walk">散策コース</a>
+          <a class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-paper-deep" href="#seasons">花ごよみ</a>
+          <a class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-paper-deep" href="#access">アクセス・駐車場</a>
+          <a class="mt-2 block rounded-xl bg-vermilion px-4 py-3 text-center text-sm font-bold text-white" href="#planner">コースを選ぶ</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+</div>
+
+<nav class="fixed inset-x-0 bottom-0 z-[90] grid grid-cols-4 border-t border-ink/10 bg-[#faf7f0]/95 px-2 pb-[max(.45rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-12px_30px_rgba(38,51,47,.08)] backdrop-blur-xl md:hidden" aria-label="クイックナビゲーション">
+  <a href="#today" class="flex flex-col items-center gap-1 text-[0.62rem] font-bold"><span class="text-lg">●</span>いま</a>
+  <a href="#walk" class="flex flex-col items-center gap-1 text-[0.62rem] font-bold"><span class="text-lg">⌁</span>コース</a>
+  <a href="#parking" class="flex flex-col items-center gap-1 text-[0.62rem] font-bold"><span class="text-base">P</span>駐車場</a>
+  <a href="#checklist" class="flex flex-col items-center gap-1 text-[0.62rem] font-bold"><span class="text-base">✓</span>保存</a>
+</nav>

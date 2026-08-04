@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="プライバシーポリシー｜茂原公園ガイド" description="茂原公園ガイドのアクセス解析と端末内保存について。" pathname="/privacy/">
+  <Header />
+  <main id="main-content" class="container-site py-20 sm:py-28">
+    <p class="eyebrow">PRIVACY</p>
+    <h1 class="serif mt-5 text-4xl sm:text-6xl">プライバシーポリシー</h1>
+    <div class="mt-12 max-w-3xl space-y-10 text-sm leading-8 text-ink-soft">
+      <section><h2 class="serif text-2xl text-ink">アクセス解析</h2><p class="mt-3">当サイトでは、閲覧状況の把握と改善のため Google Analytics 4 を利用しています。Google が収集する情報や取り扱いについては、Google のポリシーをご確認ください。</p></section>
+      <section><h2 class="serif text-2xl text-ink">端末内への保存</h2><p class="mt-3">散策コースと「行きたい場所」の選択内容は、お使いのブラウザの localStorage にのみ保存されます。当サイトのサーバーやデータベースには送信されません。ブラウザのサイトデータを削除すると消去できます。</p></section>
+      <section><h2 class="serif text-2xl text-ink">外部リンク</h2><p class="mt-3">公式情報や地図への外部リンク先では、各サイトのプライバシーポリシーが適用されます。</p></section>
+    </div>
+    <a href="/" class="mt-12 inline-flex rounded-full bg-ink px-6 py-3 text-xs font-bold text-white">トップへ戻る</a>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,477 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import RouteCard from "../components/RouteCard.astro";
+import ParkMap from "../components/ParkMap.astro";
+import heroImage from "../assets/photos/mobara-park-panorama.jpg";
+import blossomImage from "../assets/photos/mobara-cherry-blossoms.jpg";
+import springImage from "../assets/photos/mobara-spring-lake.jpg";
+import nightImage from "../assets/photos/mobara-night.jpg";
+import bridgeImage from "../assets/photos/mobara-benten-bridge.jpg";
+import { park, parking } from "../data/park";
+import { routes } from "../data/routes";
+import { seasons, faqs } from "../data/seasons";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Park", "TouristAttraction"],
+      "@id": `${Astro.site}#park`,
+      name: park.name,
+      description: "弁天湖と朱色の弁天橋、四季の花を楽しめる千葉県茂原市の都市公園。",
+      address: {
+        "@type": "PostalAddress",
+        postalCode: "297-0029",
+        addressRegion: "千葉県",
+        addressLocality: "茂原市",
+        streetAddress: "高師1325-1",
+        addressCountry: "JP",
+      },
+      geo: { "@type": "GeoCoordinates", latitude: park.coordinates.latitude, longitude: park.coordinates.longitude },
+      isAccessibleForFree: true,
+      url: park.officialUrl,
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/%E8%8C%82%E5%8E%9F%E5%85%AC%E5%9C%92%E6%A1%9C%E9%A2%A8%E6%99%AF.JPG",
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout structuredData={structuredData}>
+  <Header />
+
+  <main id="main-content">
+    <section class="relative overflow-hidden pb-14 pt-10 sm:pb-20 sm:pt-16 lg:pb-28 lg:pt-20" aria-labelledby="hero-title">
+      <div class="pointer-events-none absolute right-[-4rem] top-6 hidden select-none font-serif text-[17rem] font-light leading-none text-ink/[0.025] lg:block">春</div>
+      <div class="container-site">
+        <div class="grid items-end gap-10 lg:grid-cols-[0.77fr_1.23fr] lg:gap-14">
+          <div class="relative z-10 reveal">
+            <p class="mb-8 flex items-center gap-3 text-[0.66rem] font-bold tracking-[0.2em] text-ink/45"><span>01</span><span class="h-px w-10 bg-ink/20"></span><span>CHIBA · MOBARA</span></p>
+            <h1 id="hero-title" class="serif text-balance text-[clamp(3.15rem,7vw,6.5rem)] font-medium leading-[1.12] tracking-[0.015em] text-ink">
+              朱の橋を<br/>渡れば、<br/><span class="block whitespace-nowrap text-[0.62em] text-vermilion">湖いっぱいの春。</span>
+            </h1>
+            <p class="mt-8 max-w-md text-sm leading-8 text-ink-soft sm:text-base">弁天湖を囲む桜と、四季の花。茂原公園を気持ちよく歩くための小さな旅案内です。</p>
+            <div class="mt-9 flex flex-wrap gap-3">
+              <a href="#today" class="group inline-flex items-center gap-3 rounded-full bg-ink px-6 py-3.5 text-xs font-bold tracking-[0.08em] text-white transition hover:bg-vermilion">今の見どころ <span class="transition group-hover:translate-x-1">→</span></a>
+              <a href="#planner" class="inline-flex items-center rounded-full border border-ink/20 px-6 py-3.5 text-xs font-bold tracking-[0.08em] transition hover:border-vermilion hover:text-vermilion">コースを選ぶ</a>
+            </div>
+          </div>
+
+          <figure class="relative reveal [animation-delay:120ms]">
+            <div class="relative ml-auto aspect-[4/4.5] max-h-[700px] overflow-hidden rounded-t-[12rem] rounded-b-[1.5rem] bg-lake sm:aspect-[4/3.7] lg:aspect-[4/4.6]">
+              <Image src={heroImage} alt="高台から見下ろす春の弁天湖、朱色の弁天橋と満開の桜" widths={[640, 960, 1280, 1600]} sizes="(max-width: 1023px) 100vw, 58vw" format="webp" quality={82} loading="eager" fetchpriority="high" class="h-full w-full object-cover object-[54%_center]" />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent"></div>
+              <figcaption class="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4 text-white sm:bottom-8 sm:left-8 sm:right-8">
+                <p class="serif text-xl leading-relaxed sm:text-2xl">弁天湖、<br/>春の眺望。</p>
+                <span class="text-right text-[0.6rem] leading-5 tracking-[0.12em] text-white/65">PHOTO: 天野雅章<br/>CC BY-SA 3.0</span>
+              </figcaption>
+            </div>
+            <div class="absolute -bottom-7 -left-4 flex h-28 w-28 rotate-[-8deg] flex-col items-center justify-center rounded-full border border-vermilion/40 bg-[#f8f3eb] text-center shadow-xl shadow-ink/10 sm:-left-10 sm:h-36 sm:w-36">
+              <span class="text-[0.6rem] font-bold tracking-[0.14em] text-vermilion">ENTRANCE</span>
+              <span class="serif mt-1 text-lg font-semibold">無料</span>
+              <span class="mt-1 text-[0.6rem] text-ink/55">160,829㎡</span>
+            </div>
+          </figure>
+        </div>
+        <div class="mt-20 grid border-y border-ink/12 py-5 text-xs sm:grid-cols-3 sm:divide-x sm:divide-ink/12 lg:mt-12 lg:ml-[40%]">
+          <div class="flex items-center gap-3 px-4 py-2"><span class="text-vermilion">●</span><span><strong class="block">千葉県茂原市</strong><small class="mt-1 block text-ink/45">高師1325-1</small></span></div>
+          <div class="flex items-center gap-3 px-4 py-2"><span class="text-vermilion">↗</span><span><strong class="block">JR茂原駅</strong><small class="mt-1 block text-ink/45">徒歩約30分</small></span></div>
+          <div class="flex items-center gap-3 px-4 py-2"><span class="text-vermilion">◯</span><span><strong class="block">外周園路</strong><small class="mt-1 block text-ink/45">1周 約1km</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="today" class="section-pad scroll-mt-24 bg-[#e9e3d8]">
+      <div class="container-site">
+        <div class="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <div>
+            <p class="eyebrow">TODAY’S GUIDE</p>
+            <h2 class="serif mt-5 text-[clamp(2.5rem,5vw,4.7rem)] font-medium leading-tight">今日の<br/>茂原公園。</h2>
+            <div class="mt-8 inline-flex items-center gap-3 rounded-full bg-[#d9e3d9] px-4 py-2 text-xs font-bold text-[#365247]"><span class="h-2 w-2 rounded-full bg-[#4e765d]"></span>夏の散策シーズン</div>
+            <p class="mt-6 max-w-sm text-sm leading-7 text-ink-soft">木陰の多い湖畔を中心に、涼しい朝夕の時間帯を選んで歩くのがおすすめです。</p>
+          </div>
+          <div class="grid gap-px overflow-hidden rounded-3xl bg-ink/10 sm:grid-cols-2">
+            {[
+              ["01", "いまの季節", "夏・深緑", "水辺の木陰を選んで、朝夕の散策を。"],
+              ["02", "おすすめ滞在", "約90分", "湖畔と展望を急がず巡る目安。"],
+              ["03", "いまの見どころ", "湖畔・緑陰", "蓮、水面の光、深い木々の色。"],
+              ["04", "歩き方", "湖畔コース", "暑い時間帯の山側散策路は控えめに。"],
+            ].map((item, index) => (
+              <article class:list={["min-h-56 bg-[#f8f5ee] p-7 sm:p-9", index === 0 && "sm:rounded-tl-3xl", index === 1 && "sm:rounded-tr-3xl", index === 2 && "sm:rounded-bl-3xl", index === 3 && "sm:rounded-br-3xl"]}>
+                <div class="flex items-start justify-between"><span class="text-[0.62rem] font-bold tracking-[0.18em] text-vermilion">{item[0]}</span><span class="serif text-3xl text-ink/12">○</span></div>
+                <p class="mt-7 text-xs font-bold tracking-[0.08em] text-ink/50">{item[1]}</p>
+                <h3 class="serif mt-2 text-2xl font-semibold">{item[2]}</h3>
+                <p class="mt-4 text-xs leading-6 text-ink-soft">{item[3]}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="highlights" class="section-pad">
+      <div class="container-site">
+        <SectionTitle eyebrow="THREE SCENES" title="はじめて訪れるなら、この三景。" description="水辺から見上げ、高台から見下ろす。弁天湖を中心に視点を変えると、公園の地形と季節がよく見えてきます。" />
+        <div class="mt-16 grid gap-6 lg:grid-cols-12 lg:grid-rows-[310px_310px]">
+          <figure class="group relative overflow-hidden rounded-[1.75rem] lg:col-span-7 lg:row-span-2">
+            <Image src={springImage} alt="桜が咲く弁天湖と朱色の弁天橋" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 58vw" format="webp" quality={82} class="h-full min-h-[440px] w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>
+            <figcaption class="absolute inset-x-0 bottom-0 p-7 text-white sm:p-10"><span class="text-[0.62rem] font-bold tracking-[0.16em] text-sakura">SCENE 01</span><h3 class="serif mt-3 text-3xl sm:text-4xl">弁天湖と弁天橋</h3><p class="mt-4 max-w-lg text-sm leading-7 text-white/70">湖を横切る朱色の橋と弁天堂。水面を含めて眺めることで、茂原公園らしい一枚になります。</p></figcaption>
+          </figure>
+          <article class="rounded-[1.75rem] bg-sakura/70 p-7 sm:p-9 lg:col-span-5">
+            <span class="text-[0.62rem] font-bold tracking-[0.16em] text-vermilion-dark">SCENE 02</span><h3 class="serif mt-3 text-3xl">湖を囲む桜</h3><p class="mt-5 text-sm leading-7 text-ink-soft">3月下旬から4月上旬が通常の目安。散りはじめには、花びらが湖面を流れる景色にも出会えます。</p><div class="mt-7 flex items-center gap-3 text-xs font-bold"><span class="h-px w-10 bg-vermilion"></span>春の主役</div>
+          </article>
+          <article class="relative overflow-hidden rounded-[1.75rem] bg-[#405a51] p-7 text-white sm:p-9 lg:col-span-5">
+            <div class="absolute -right-10 -top-12 h-44 w-44 rounded-full border border-white/15"></div><div class="absolute -right-2 -top-2 h-28 w-28 rounded-full border border-white/15"></div>
+            <span class="text-[0.62rem] font-bold tracking-[0.16em] text-white/80">SCENE 03</span><h3 class="serif mt-3 text-3xl">高台から見る公園</h3><p class="mt-5 max-w-md text-sm leading-7 text-white/90">北側散策路の展望デッキへ。坂と階段の先に、湖と橋、茂原のまちを見渡す視点があります。</p><p class="mt-7 text-xs font-bold text-[#fff0d8]">坂・階段あり →</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="planner" class="section-pad bg-[#263832] text-white">
+      <div class="container-site">
+        <div class="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+          <div>
+            <p class="eyebrow !text-[#efb9b2]">ROUTE FINDER</p>
+            <h2 class="serif mt-5 text-balance text-[clamp(2.4rem,5vw,4.6rem)] font-medium leading-[1.22]">あなたに合う歩き方を、30秒で。</h2>
+            <p class="mt-6 max-w-lg text-sm leading-8 text-white/60">選択内容だけでおすすめを切り替えるシンプルな案内です。入力内容は送信されません。</p>
+            <div class="mt-10 space-y-7" id="route-planner">
+              <fieldset>
+                <legend class="mb-3 text-xs font-bold tracking-[0.1em] text-white/55">滞在時間</legend>
+                <div class="flex flex-wrap gap-2">
+                  <button class="planner-choice is-active rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="time" data-value="60" aria-pressed="true">60分</button>
+                  <button class="planner-choice rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="time" data-value="90" aria-pressed="false">90分</button>
+                  <button class="planner-choice rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="time" data-value="120" aria-pressed="false">半日</button>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend class="mb-3 text-xs font-bold tracking-[0.1em] text-white/55">いちばん大切なこと</legend>
+                <div class="flex flex-wrap gap-2">
+                  <button class="planner-choice is-active rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="purpose" data-value="easy" aria-pressed="true">無理なく歩く</button>
+                  <button class="planner-choice rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="purpose" data-value="photo" aria-pressed="false">写真を撮る</button>
+                  <button class="planner-choice rounded-full border border-white/15 px-5 py-3 text-xs font-bold transition hover:border-white/50 aria-pressed:bg-white aria-pressed:text-ink" data-group="purpose" data-value="culture" aria-pressed="false">美術館も見る</button>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="rounded-[2rem] bg-[#f6f1e8] p-7 text-ink sm:p-10 lg:p-12" aria-live="polite">
+            <div class="flex items-center justify-between border-b border-ink/10 pb-6"><span class="text-[0.62rem] font-bold tracking-[0.18em] text-vermilion">YOUR ROUTE</span><span id="planner-time" class="rounded-full bg-paper-deep px-3 py-1.5 text-xs font-bold">45–60分</span></div>
+            <h3 id="planner-title" class="serif mt-8 text-3xl font-semibold sm:text-4xl">湖畔ゆっくりコース</h3>
+            <p id="planner-subtitle" class="mt-4 text-sm leading-7 text-ink-soft">赤い橋と水辺を、無理なくひと巡り。</p>
+            <ol id="planner-stops" class="mt-8 grid gap-3 text-sm">
+              {routes[0].stops.map((stop, index) => <li class="flex items-center gap-3"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-vermilion text-[0.65rem] font-bold text-white">{index + 1}</span>{stop}</li>)}
+            </ol>
+            <p id="planner-note" class="mt-8 rounded-2xl bg-[#ebe5da] p-4 text-xs leading-6 text-ink-soft">{routes[0].note}</p>
+            <button id="planner-save" class="mt-7 w-full rounded-full bg-vermilion px-6 py-4 text-xs font-bold tracking-[0.1em] text-white transition hover:bg-vermilion-dark" data-route="lakeside" data-route-name="湖畔ゆっくりコース">このコースを端末に保存</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="walk" class="section-pad">
+      <div class="container-site">
+        <div class="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <SectionTitle eyebrow="WALK THE PARK" title="どんなふうに歩きますか？" description="湖だけを気軽に巡る日も、高台や文化施設まで足を延ばす日も。時間と体力に合わせた3つの歩き方です。" />
+        </div>
+        <div class="mt-16 grid gap-10 lg:grid-cols-3">
+          {routes.map((route) => <RouteCard route={route} />)}
+        </div>
+        <div class="mt-20 grid items-center gap-10 lg:grid-cols-[1.3fr_.7fr] lg:gap-16">
+          <ParkMap />
+          <div>
+            <p class="eyebrow">MAP NOTES</p>
+            <h3 class="serif mt-5 text-3xl leading-snug sm:text-4xl">湖を中心に考えると、迷いにくい。</h3>
+            <p class="mt-6 text-sm leading-8 text-ink-soft">第1駐車場から入ると、弁天湖はすぐ。まず朱色の弁天橋を目印にし、体力と時間に合わせて八橋、高台、美術館へ枝分かれするのが分かりやすい歩き方です。</p>
+            <div class="mt-8 grid gap-3 text-xs">
+              <div class="flex items-center justify-between border-b border-ink/10 py-3"><span>湖畔中心</span><strong>坂を避けやすい</strong></div>
+              <div class="flex items-center justify-between border-b border-ink/10 py-3"><span>展望デッキ</span><strong>坂・階段あり</strong></div>
+              <div class="flex items-center justify-between border-b border-ink/10 py-3"><span>トイレ</span><strong>園内3か所</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="seasons" class="section-pad overflow-hidden bg-[#e9e1d5]">
+      <div class="container-site">
+        <SectionTitle eyebrow="FLOWER CALENDAR" title="茂原公園の花ごよみ。" description="桜だけではありません。梅、ツツジ、アジサイ、深緑、紅葉へ。季節ごとに湖畔の色がゆっくり変わります。" />
+        <div class="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] bg-ink/10 sm:grid-cols-2 lg:grid-cols-6">
+          {seasons.map((season) => (
+            <article class="group relative min-h-64 overflow-hidden bg-[#f7f3eb] p-6">
+              <div class="absolute -right-6 -top-6 h-28 w-28 rounded-full opacity-20 transition duration-500 group-hover:scale-125" style={`background:${season.color}`}></div>
+              <p class="text-[0.6rem] font-bold tracking-[0.16em] text-ink/40">MONTH</p>
+              <p class="serif mt-2 text-3xl" style={`color:${season.color}`}>{season.month}</p>
+              <div class="mt-16">
+                <span class="mb-4 block h-2 w-2 rotate-45" style={`background:${season.color}`}></span>
+                <h3 class="serif text-2xl font-semibold">{season.name}</h3>
+                <p class="mt-2 text-xs text-ink-soft">{season.period}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p class="mt-5 text-xs leading-6 text-ink/75">開花時期は天候により前後します。</p>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-[#171d1b] text-white">
+      <div class="grid min-h-[760px] lg:grid-cols-2">
+        <div class="relative min-h-[430px] lg:min-h-full">
+          <Image src={nightImage} alt="夜桜のライトアップが湖面に映る茂原公園の弁天湖" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 50vw" format="webp" quality={82} class="absolute inset-0 h-full w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#171d1b] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#171d1b]"></div>
+          <p class="absolute bottom-5 left-6 text-[0.58rem] tracking-[0.12em] text-white/55">PHOTO: アラツク / CC BY-SA 4.0</p>
+        </div>
+        <div class="flex items-center px-5 py-20 sm:px-12 lg:px-[clamp(3rem,7vw,8rem)]">
+          <div class="max-w-xl">
+            <p class="eyebrow !text-[#e5a9a3]">SAKURA AT NIGHT</p>
+            <h2 class="serif mt-6 text-balance text-[clamp(2.7rem,5.4vw,5.3rem)] font-medium leading-[1.2]">春、弁天湖は<br/>桜に包まれる。</h2>
+            <p class="mt-7 text-sm leading-8 text-white/62">例年の見頃は3月下旬から4月上旬。弁天湖の周囲では、2,000本以上のソメイヨシノなどが春を彩ります。</p>
+            <div class="mt-10 grid grid-cols-2 gap-px bg-white/12">
+              <div class="bg-[#171d1b] py-5 pr-4"><span class="block text-[0.58rem] tracking-[0.14em] text-white/70">TYPICAL SEASON</span><strong class="serif mt-2 block text-xl">3月下旬—4月上旬</strong></div>
+              <div class="bg-[#171d1b] py-5 pl-5"><span class="block text-[0.58rem] tracking-[0.14em] text-white/70">TREES</span><strong class="serif mt-2 block text-xl">2,000本以上</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad">
+      <div class="container-site">
+        <SectionTitle eyebrow="PHOTO NOTES" title="写真に残したい、水辺の表情。" description="掲載写真はすべて、実際の茂原公園で撮影された写真です。撮影位置の参考にしながら、季節と光の違いも楽しんでください。" />
+        <div class="mt-14 grid auto-rows-[230px] gap-4 sm:grid-cols-2 sm:auto-rows-[280px] lg:grid-cols-12">
+          <figure class="group relative overflow-hidden rounded-[1.5rem] sm:row-span-2 lg:col-span-7">
+            <Image src={heroImage} alt="高台から見る弁天湖と弁天橋" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 58vw" format="webp" quality={80} class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent px-6 pb-5 pt-16 text-sm font-bold text-white">01　高台から見る弁天湖</figcaption>
+          </figure>
+          <figure class="group relative overflow-hidden rounded-[1.5rem] lg:col-span-5">
+            <Image src={bridgeImage} alt="弁天湖の石碑と朱色の欄干、対岸の桜" widths={[480, 720, 960]} sizes="(max-width: 1023px) 100vw, 42vw" format="webp" quality={80} class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent px-6 pb-5 pt-16 text-sm font-bold text-white">02　弁天橋のたもと</figcaption>
+          </figure>
+          <figure class="group relative overflow-hidden rounded-[1.5rem] lg:col-span-5">
+            <Image src={blossomImage} alt="桜の花びらが浮かぶ弁天湖と対岸の赤い橋" widths={[480, 720, 960]} sizes="(max-width: 1023px) 100vw, 42vw" format="webp" quality={80} class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent px-6 pb-5 pt-16 text-sm font-bold text-white">03　花びらが流れる湖面</figcaption>
+          </figure>
+        </div>
+        <div class="mt-5 flex flex-col gap-3 text-[0.62rem] leading-5 text-ink/45 sm:flex-row sm:justify-between">
+          <p>写真：天野雅章 / CC BY-SA 3.0、Noodle Bones / CC BY 2.0</p>
+          <a href="#photo-credits" class="font-bold underline underline-offset-4">写真クレジットを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="family" class="section-pad bg-[#dbe3dc]">
+      <div class="container-site grid gap-14 lg:grid-cols-2 lg:gap-24">
+        <div>
+          <SectionTitle eyebrow="FAMILY & ACCESSIBILITY" title="子どもと一緒に、無理なく歩く。" description="「行ける」だけでなく、どこを選ぶと楽かまで。家族のペースで湖畔を楽しむための判断材料です。" />
+          <div class="mt-10 grid gap-3 sm:grid-cols-2">
+            {[
+              ["ベビーカー", "湖畔の舗装園路を中心に。山側は坂・階段あり。"],
+              ["遊具", "第1広場に複合遊具とターザンロープ。"],
+              ["休憩", "東屋、シェルター、ベンチ、水飲みあり。"],
+              ["トイレ", "3か所。第1・第2トイレに身障者用設備。"],
+            ].map((item, index) => <article class="rounded-2xl bg-[#f5f3eb] p-5"><span class="text-[0.58rem] font-bold tracking-[0.14em] text-vermilion">0{index + 1}</span><h3 class="serif mt-3 text-xl font-semibold">{item[0]}</h3><p class="mt-3 text-xs leading-6 text-ink-soft">{item[1]}</p></article>)}
+          </div>
+        </div>
+        <div id="checklist" class="self-center rounded-[2rem] bg-[#faf7f0] p-7 shadow-xl shadow-ink/5 sm:p-10">
+          <div class="flex items-start justify-between gap-4 border-b border-ink/10 pb-6"><div><p class="text-[0.62rem] font-bold tracking-[0.17em] text-vermilion">MY WALK LIST</p><h3 class="serif mt-2 text-3xl">行きたい場所</h3></div><span id="check-progress" class="serif text-2xl text-ink/35">0/6</span></div>
+          <div class="mt-6 grid gap-2">
+            {[
+              ["benten-bridge", "弁天橋", "湖のシンボル"], ["benten-do", "弁天堂", "朱色の小堂"], ["viewpoint", "展望デッキ", "坂と階段あり"], ["playground", "こども広場", "遊具とベンチ"], ["museum", "美術館・郷土資料館", "開館日を確認"], ["yatsuhashi", "八橋", "水辺の散策"],
+            ].map((item) => (
+              <label class="group flex cursor-pointer items-center gap-4 rounded-xl px-3 py-3 transition hover:bg-paper-deep">
+                <input class="spot-check peer sr-only" type="checkbox" value={item[0]} />
+                <span class="flex h-7 w-7 items-center justify-center rounded-full border border-ink/20 text-transparent transition peer-checked:border-vermilion peer-checked:bg-vermilion peer-checked:text-white">✓</span>
+                <span><strong class="block text-sm">{item[1]}</strong><small class="mt-1 block text-[0.64rem] text-ink/45">{item[2]}</small></span>
+              </label>
+            ))}
+          </div>
+          <div class="mt-6 flex items-center justify-between border-t border-ink/10 pt-5"><p id="check-message" class="text-xs text-ink/50">選んだ場所はこの端末に保存されます。</p><button id="check-reset" class="text-[0.65rem] font-bold text-vermilion underline underline-offset-4">リセット</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="access" class="section-pad">
+      <div class="container-site">
+        <SectionTitle eyebrow="ACCESS" title="迷わず着くための案内。" description="駅から歩く、バスを使う、車で向かう。到着後にいちばん近い景色まで、迷いにくい情報をまとめました。" />
+        <div class="mt-14 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
+          <div class="rounded-[2rem] bg-vermilion p-8 text-white sm:p-10">
+            <p class="text-[0.62rem] font-bold tracking-[0.18em] text-white/85">DESTINATION</p>
+            <h3 class="serif mt-5 text-3xl">茂原公園</h3>
+            <p class="mt-3 text-sm leading-7 text-white/90">{park.address}</p>
+            <div class="mt-8 space-y-5 border-y border-white/15 py-7 text-sm">
+              <div class="flex justify-between gap-6"><span class="text-white/85">電車・徒歩</span><strong class="text-right">茂原駅から約30分</strong></div>
+              <div class="flex justify-between gap-6"><span class="text-white/85">バス</span><strong class="text-right">乗車約7分＋徒歩約10分</strong></div>
+              <div class="flex justify-between gap-6"><span class="text-white/85">入園・駐車</span><strong class="text-right">無料</strong></div>
+            </div>
+            <a href={park.mapsUrl} target="_blank" rel="noreferrer" class="mt-8 flex items-center justify-between rounded-full bg-white px-6 py-4 text-xs font-bold tracking-[0.08em] text-vermilion"><span>Google マップで経路を見る</span><span>↗</span></a>
+          </div>
+          <div class="grid gap-px overflow-hidden rounded-[2rem] bg-ink/10 sm:grid-cols-3">
+            <article class="bg-[#f7f3eb] p-7 sm:p-8"><span class="serif text-4xl text-ink/60">01</span><h3 class="serif mt-8 text-2xl">駅から歩く</h3><p class="mt-4 text-xs leading-6 text-ink-soft">JR茂原駅から約30分。荷物が少なく、まちも一緒に歩きたい日に。</p></article>
+            <article class="bg-[#f7f3eb] p-7 sm:p-8"><span class="serif text-4xl text-ink/60">02</span><h3 class="serif mt-8 text-2xl">バスを使う</h3><p class="mt-4 text-xs leading-6 text-ink-soft">西町停留所へ。便数と西町経由かどうかを乗車前に確認してください。</p></article>
+            <article class="bg-[#f7f3eb] p-7 sm:p-8"><span class="serif text-4xl text-ink/60">03</span><h3 class="serif mt-8 text-2xl">車で向かう</h3><p class="mt-4 text-xs leading-6 text-ink-soft">国道128号の「茂原公園」交差点が目印。桜の時期は早めの到着を。</p></article>
+          </div>
+        </div>
+
+        <div id="parking" class="mt-20 scroll-mt-24">
+          <div class="flex flex-col justify-between gap-4 border-b border-ink/15 pb-6 sm:flex-row sm:items-end">
+            <div><p class="text-[0.62rem] font-bold tracking-[0.18em] text-vermilion">PARKING</p><h3 class="serif mt-3 text-3xl sm:text-4xl">無料駐車場の選び方</h3></div>
+            <p class="text-xs text-ink/75">第1・第2・中部の3か所から選べます。</p>
+          </div>
+          <div class="grid gap-px bg-ink/10 lg:grid-cols-3">
+            {parking.map((lot, index) => (
+              <article class="bg-paper px-1 py-8 sm:px-7 lg:px-8">
+                <div class="flex items-center justify-between"><span class="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-sm font-bold text-white">P{index + 1}</span><strong class="text-xs text-vermilion">{lot.walk}</strong></div>
+                <h4 class="serif mt-7 text-2xl font-semibold">{lot.name}</h4><p class="mt-3 min-h-12 text-xs leading-6 text-ink-soft">{lot.note}</p>
+                <dl class="mt-6 grid gap-3 border-t border-ink/10 pt-5 text-xs"><div class="flex justify-between gap-4"><dt class="text-ink/45">収容</dt><dd class="text-right font-bold">{lot.capacity}</dd></div><div class="flex justify-between gap-4"><dt class="text-ink/45">車いす</dt><dd class="text-right font-bold">{lot.accessible}</dd></div><div class="flex justify-between gap-4"><dt class="text-ink/45">バス</dt><dd class="text-right font-bold">{lot.bus}</dd></div></dl>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad bg-[#ebe4da]">
+      <div class="container-site grid gap-14 lg:grid-cols-[.65fr_1.35fr] lg:gap-20">
+        <div>
+          <p class="eyebrow">FAQ</p><h2 class="serif mt-5 text-[clamp(2.5rem,5vw,4.5rem)] leading-tight">行く前に、<br/>知っておきたいこと。</h2><p class="mt-6 text-sm leading-7 text-ink-soft">入園料、交通、設備、桜の季節についてまとめました。</p>
+        </div>
+        <div class="border-t border-ink/20">
+          {faqs.map((item, index) => (
+            <details class="group border-b border-ink/20 py-1">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left"><span class="flex items-baseline gap-4"><span class="serif text-sm text-vermilion">Q{String(index + 1).padStart(2, "0")}</span><strong class="text-sm leading-6 sm:text-base">{item.q}</strong></span><span class="text-2xl font-light transition group-open:rotate-45">＋</span></summary>
+              <p class="pb-7 pl-12 pr-8 text-sm leading-8 text-ink-soft">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden bg-vermilion px-5 py-20 text-center text-white sm:py-28">
+      <div class="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div><div class="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div>
+      <div class="relative mx-auto max-w-3xl"><p class="text-[0.62rem] font-bold tracking-[0.2em] text-white/85">READY TO WALK?</p><h2 class="serif mt-6 text-balance text-[clamp(2.7rem,6vw,5.5rem)] leading-[1.18]">桜の日も、緑の日も。<br/>湖畔へ。</h2><p class="mx-auto mt-7 max-w-lg text-sm leading-7 text-white/90">迷ったら、まずは弁天湖を一周。赤い橋の向こうから、今日の散歩を始めてください。</p><div class="mt-9 flex flex-wrap justify-center gap-3"><a href={park.mapsUrl} target="_blank" rel="noreferrer" class="rounded-full bg-white px-7 py-4 text-xs font-bold tracking-[0.08em] text-vermilion">経路を開く ↗</a><a href="#planner" class="rounded-full border border-white/60 px-7 py-4 text-xs font-bold tracking-[0.08em]">コースを選び直す</a></div></div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <div id="save-toast" class="pointer-events-none fixed bottom-24 left-1/2 z-[110] -translate-x-1/2 translate-y-5 rounded-full bg-ink px-5 py-3 text-xs font-bold text-white opacity-0 shadow-xl transition md:bottom-8" role="status" aria-live="polite">コースを保存しました</div>
+
+  <script>
+    const routeData = {
+      lakeside: {
+        title: "湖畔ゆっくりコース",
+        time: "45–60分",
+        subtitle: "赤い橋と水辺を、無理なくひと巡り。",
+        stops: ["第1駐車場", "弁天橋", "弁天堂", "八橋", "第1広場"],
+        note: "湖畔中心。ベビーカーは山側の散策路を避け、舗装された園路を選ぶと安心です。",
+      },
+      photo: {
+        title: "桜と眺望コース",
+        time: "約90分",
+        subtitle: "湖面の光から、高台の景色へ。",
+        stops: ["湖南岸", "弁天橋", "八橋", "北側散策路", "展望デッキ"],
+        note: "展望デッキへは坂と階段があります。雨上がりは足元に注意してください。",
+      },
+      culture: {
+        title: "公園と文化コース",
+        time: "120–150分",
+        subtitle: "自然と美術、まちの記憶をつなぐ。",
+        stops: ["弁天湖", "第2広場", "美術館・郷土資料館", "展望広場", "藻原寺方面"],
+        note: "施設の開館日・時間は出発前に公式情報を確認してください。",
+      },
+    } as const;
+
+    type RouteKey = keyof typeof routeData;
+    const selected = { time: "60", purpose: "easy" };
+    let currentRoute: RouteKey = "lakeside";
+
+    const title = document.querySelector<HTMLElement>("#planner-title");
+    const time = document.querySelector<HTMLElement>("#planner-time");
+    const subtitle = document.querySelector<HTMLElement>("#planner-subtitle");
+    const stops = document.querySelector<HTMLOListElement>("#planner-stops");
+    const note = document.querySelector<HTMLElement>("#planner-note");
+    const plannerSave = document.querySelector<HTMLButtonElement>("#planner-save");
+    const toast = document.querySelector<HTMLElement>("#save-toast");
+
+    function pickRoute(): RouteKey {
+      if (selected.purpose === "photo") return "photo";
+      if (selected.purpose === "culture" || selected.time === "120") return "culture";
+      if (selected.time === "90") return "photo";
+      return "lakeside";
+    }
+
+    function renderPlanner() {
+      currentRoute = pickRoute();
+      const route = routeData[currentRoute];
+      if (title) title.textContent = route.title;
+      if (time) time.textContent = route.time;
+      if (subtitle) subtitle.textContent = route.subtitle;
+      if (note) note.textContent = route.note;
+      if (stops) stops.innerHTML = route.stops.map((stop, index) => `<li class="flex items-center gap-3"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-vermilion text-[0.65rem] font-bold text-white">${index + 1}</span>${stop}</li>`).join("");
+      if (plannerSave) {
+        plannerSave.dataset.route = currentRoute;
+        plannerSave.dataset.routeName = route.title;
+      }
+    }
+
+    document.querySelectorAll<HTMLButtonElement>(".planner-choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        const group = button.dataset.group as "time" | "purpose" | undefined;
+        const value = button.dataset.value;
+        if (!group || !value) return;
+        selected[group] = value;
+        document.querySelectorAll<HTMLButtonElement>(`.planner-choice[data-group="${group}"]`).forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        renderPlanner();
+      });
+    });
+
+    function showToast(message: string) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove("translate-y-5", "opacity-0");
+      window.setTimeout(() => toast.classList.add("translate-y-5", "opacity-0"), 1800);
+    }
+
+    function saveRoute(button: HTMLButtonElement) {
+      const id = button.dataset.route;
+      const name = button.dataset.routeName;
+      if (!id || !name) return;
+      localStorage.setItem("mobara-saved-route", JSON.stringify({ id, name, savedAt: new Date().toISOString() }));
+      showToast(`${name}を保存しました`);
+    }
+
+    document.querySelectorAll<HTMLButtonElement>(".route-save, #planner-save").forEach((button) => button.addEventListener("click", () => saveRoute(button)));
+
+    const checks = [...document.querySelectorAll<HTMLInputElement>(".spot-check")];
+    const progress = document.querySelector<HTMLElement>("#check-progress");
+    const message = document.querySelector<HTMLElement>("#check-message");
+
+    function updateChecks() {
+      const chosen = checks.filter((check) => check.checked).map((check) => check.value);
+      localStorage.setItem("mobara-spot-list", JSON.stringify(chosen));
+      if (progress) progress.textContent = `${chosen.length}/${checks.length}`;
+      if (message) message.textContent = chosen.length ? `${chosen.length}か所を保存中です。` : "選んだ場所はこの端末に保存されます。";
+    }
+
+    try {
+      const saved = JSON.parse(localStorage.getItem("mobara-spot-list") ?? "[]") as string[];
+      checks.forEach((check) => { check.checked = saved.includes(check.value); });
+    } catch { localStorage.removeItem("mobara-spot-list"); }
+    updateChecks();
+    checks.forEach((check) => check.addEventListener("change", updateChecks));
+    document.querySelector<HTMLButtonElement>("#check-reset")?.addEventListener("click", () => { checks.forEach((check) => { check.checked = false; }); updateChecks(); showToast("行きたい場所をリセットしました"); });
+
+    document.querySelectorAll<HTMLAnchorElement>("details nav a").forEach((link) => link.addEventListener("click", () => link.closest("details")?.removeAttribute("open")));
+  </script>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import Logo from "./Logo.astro";
+import { sources } from "../data/park";
+---
+
+<footer id="photo-credits" class="scroll-mt-24 bg-[#20302c] pb-10 pt-20 text-white">
+  <div class="container-site">
+    <div class="grid gap-12 border-b border-white/12 pb-16 lg:grid-cols-[1.3fr_.7fr_.7fr]">
+      <div>
+        <Logo light />
+        <p class="serif mt-7 max-w-md text-2xl leading-relaxed text-white/88">桜の日も、緑の日も。<br/>茂原公園を歩こう。</p>
+      </div>
+      <div>
+        <h2 class="text-[0.65rem] font-bold tracking-[0.2em] text-white/70">GUIDE</h2>
+        <nav class="mt-5 grid gap-3 text-sm" aria-label="フッターナビゲーション">
+          <a href="#today" class="hover:text-sakura">今日の案内</a><a href="#walk" class="hover:text-sakura">散策コース</a><a href="#seasons" class="hover:text-sakura">四季の花</a><a href="#access" class="hover:text-sakura">アクセス</a><a href="/privacy/" class="hover:text-sakura">プライバシー</a>
+        </nav>
+      </div>
+      <div>
+        <h2 class="text-[0.65rem] font-bold tracking-[0.2em] text-white/70">INFORMATION SOURCES</h2>
+        <ul class="mt-5 grid gap-3 text-xs leading-6 text-white/70">
+          {sources.map((source) => <li><a href={source.url} target="_blank" rel="noreferrer" class="underline decoration-white/20 underline-offset-4 hover:decoration-white">{source.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="grid gap-6 pt-8 text-[0.64rem] leading-5 text-white/70 lg:grid-cols-[1fr_2fr]">
+      <p>© 茂原公園ガイド</p>
+      <p>写真：<a class="underline underline-offset-2" href="https://commons.wikimedia.org/wiki/File:%E8%8C%82%E5%8E%9F%E5%85%AC%E5%9C%92%E6%A1%9C%E9%A2%A8%E6%99%AF.JPG" target="_blank" rel="noreferrer">天野雅章 / CC BY-SA 3.0</a>、<a class="underline underline-offset-2" href="https://commons.wikimedia.org/wiki/File:Cherry_blossoms,_Mobara_Park_-_Apr_5,_2008.jpg" target="_blank" rel="noreferrer">Noodle Bones / CC BY 2.0</a>、<a class="underline underline-offset-2" href="https://commons.wikimedia.org/wiki/File:Mobara_Park_at_night.JPG" target="_blank" rel="noreferrer">アラツク / CC BY-SA 4.0</a>、<a class="underline underline-offset-2" href="https://commons.wikimedia.org/wiki/File:Mobara_Koen_in_the_spring.jpg" target="_blank" rel="noreferrer">Mobara Koen in the spring / CC BY 2.5</a>。</p>
+    </div>
+  </div>
+</footer>
