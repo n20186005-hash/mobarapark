@@ -1,0 +1,39 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { park } from "../data/park";
+import { transport } from "../data/guide";
+---
+
+<section id="transport" class="section-pad">
+  <div class="container-site">
+    <SectionTitle eyebrow="GETTING HERE" title="空港・駅・車、それぞれのアクセス。" description="成田・羽田からの流れ、公共交通の乗り継ぎ、タクシーの目安をまとめました。所要は目安です。" />
+    <div class="mt-14 grid gap-8 lg:grid-cols-2">
+      <div class="rounded-[2rem] bg-[#f7f3eb] p-7 sm:p-10">
+        <p class="eyebrow">FROM AIRPORTS</p>
+        <h3 class="serif mt-4 text-2xl font-semibold sm:text-3xl">空港から</h3>
+        <div class="mt-6 grid gap-5">
+          {transport.airport.map((a) => (
+            <div class="border-t border-ink/10 pt-5">
+              <h4 class="text-sm font-bold">{a.name}</h4>
+              <p class="mt-2 text-xs leading-7 text-ink-soft">{a.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="grid gap-8">
+        <div class="rounded-[2rem] bg-[#f7f3eb] p-7 sm:p-10">
+          <p class="eyebrow">PUBLIC TRANSIT</p>
+          <h3 class="serif mt-4 text-2xl font-semibold sm:text-3xl">公共交通で</h3>
+          <p class="mt-5 text-sm leading-8 text-ink-soft">{transport.public}</p>
+          <p class="mt-4 text-xs leading-7 text-ink-soft">最寄り駅：{park.stationWalk}。バスは「{park.stationBus}」。</p>
+        </div>
+        <div class="rounded-[2rem] bg-[#f7f3eb] p-7 sm:p-10">
+          <p class="eyebrow">TAXI & CAR</p>
+          <h3 class="serif mt-4 text-2xl font-semibold sm:text-3xl">タクシー・車で</h3>
+          <p class="mt-5 text-sm leading-8 text-ink-soft">{transport.taxi}</p>
+          <p class="mt-4 text-xs leading-7 text-ink-soft">{transport.drive}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

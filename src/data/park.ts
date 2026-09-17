@@ -11,6 +11,36 @@ export const park = {
   coordinates: { latitude: 35.43058, longitude: 140.28228 },
   officialUrl: "https://www.city.mobara.chiba.jp/promotion/0000001554.html",
   mapsUrl: "https://www.google.com/maps/dir/?api=1&destination=35.43058,140.28228",
+  mapsShareUrl: "https://maps.app.goo.gl/ATqkEPxrANJFKpYS9",
+  govtUrl: "https://www.city.mobara.chiba.jp/promotion/0000001554.html",
+} as const;
+
+// 谷歌地图用户评价（仅页面展示，不写入 JSON-LD）；评分与评价数同步自 Google Maps
+export const reviews = {
+  rating: 4.0,
+  count: 1606,
+  syncedAt: "2026年9月",
+  sourceName: "Google Maps",
+  mapsUrl: "https://maps.app.goo.gl/ATqkEPxrANJFKpYS9",
+} as const;
+
+// SEO 单景点实体绑定（与模版变量对应）
+export const entity = {
+  domain: "mobarapark.com",
+  fullNameEn: "Mobara Park",
+  shortNameEn: "Mobara Park",
+  cityEn: "Mobara",
+  stateEn: "Chiba",
+  countryEn: "Japan",
+  countryCode: "JP",
+  postalCode: "297-0029",
+  latitude: 35.43058,
+  longitude: 140.28228,
+  mapsShareUrl: "https://maps.app.goo.gl/ATqkEPxrANJFKpYS9",
+  mapsEmbedSrc: "https://www.google.com/maps?q=35.43058,140.28228&z=15&output=embed",
+  govtUrl: "https://www.city.mobara.chiba.jp/promotion/0000001554.html",
+  nearbyLandmark1: "藻原寺（Sogenji Temple）",
+  nearbyLandmark2: "茂原市立美術館（Mobara City Museum of Art）",
 } as const;
 
 export const parking = [

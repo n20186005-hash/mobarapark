@@ -7,13 +7,15 @@ interface Props {
   title?: string;
   description?: string;
   pathname?: string;
+  robots?: string;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = "茂原公園ガイド｜桜・弁天湖・散策コース・駐車場案内",
-  description = "千葉県茂原市の茂原公園を歩くための旅行ガイド。弁天湖と弁天橋、桜の見頃、散策コース、駐車場、子ども向け施設、季節の花を写真と地図で案内します。",
+  description = "千葉県茂原市の茂原公園を歩くための旅行ガイド。弁天湖と弁天橋、桜の見頃と花見、散策コース、駐車場、子ども向け施設、季節の花を写真と地図で案内します。",
   pathname = Astro.url.pathname,
+  robots = "index, follow",
   structuredData,
 } = Astro.props;
 
@@ -32,8 +34,11 @@ const ogUrl = new URL(ogImage.src, Astro.site);
     <meta name="format-detection" content="telephone=no" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="茂原公園ガイド" />
@@ -57,5 +62,12 @@ const ogUrl = new URL(ogImage.src, Astro.site);
   <body>
     <a href="#main-content" class="fixed left-4 top-3 z-[120] -translate-y-20 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition focus:translate-y-0">本文へ移動</a>
     <slot />
+    <script is:inline>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/sw.js").catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

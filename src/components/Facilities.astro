@@ -1,0 +1,19 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { facilities } from "../data/guide";
+---
+
+<section id="facilities" class="section-pad bg-[#e9e3d8]">
+  <div class="container-site">
+    <SectionTitle eyebrow="SERVICES AROUND" title="周辺の施設と、滞在の準備。" description="園内設備と、周辺で頼れる施設の「種類」を中立的にまとめました。お店の名前ではなく、どんなものがあるかの目安です。" />
+    <div class="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+      {facilities.map((f) => (
+        <article class="bg-[#f8f5ee] p-7 sm:p-9">
+          <p class="text-[0.6rem] font-bold tracking-[0.16em] text-vermilion">{f.en}</p>
+          <h3 class="serif mt-3 text-2xl font-semibold">{f.name}</h3>
+          <p class="mt-4 text-xs leading-7 text-ink-soft">{f.note}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

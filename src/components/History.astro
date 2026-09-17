@@ -1,0 +1,28 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { entity } from "../data/park";
+---
+
+<section id="story" class="section-pad">
+  <div class="container-site grid gap-14 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
+    <div>
+      <p class="eyebrow">THE PARK & ITS STORY</p>
+      <h2 class="serif mt-5 text-[clamp(2.2rem,5vw,4.3rem)] font-medium leading-[1.25]">弁天湖と、<br/>茂原のまち。</h2>
+      <p class="mt-7 max-w-sm text-sm leading-8 text-ink-soft">四季の花と水辺の風景が、長く市民に親しまれてきた場所の物語です。</p>
+    </div>
+    <div class="space-y-10 text-sm leading-8 text-ink-soft">
+      <div>
+        <h3 class="serif text-2xl font-semibold text-ink">弁天湖と弁天橋の由来</h3>
+        <p class="mt-4">園内の中心にある弁天湖。その名の「弁天」は、水と芸事の神とされる弁財天（べんざいてん）にちなむ命名の一例として、日本各地の湖や池に広く見られます。湖を横切る朱色の弁天橋は、茂原公園を代表する景観のひとつです。</p>
+      </div>
+      <div>
+        <h3 class="serif text-2xl font-semibold text-ink">桜の名所として</h3>
+        <p class="mt-4">茂原公園は「日本さくら名所100選」にも選定されている桜の名所です。春にはソメイヨシノをはじめとする多くの桜が湖畔を彩り、花びらが水面を流れる様子も楽しめます。まつり期間中は夜間のライトアップが行われることもあります。</p>
+      </div>
+      <div>
+        <h3 class="serif text-2xl font-semibold text-ink">茂原というまち</h3>
+        <p class="mt-4">茂原市は千葉県の東部、九十九里地域に位置し、農業と臨海部の産業で知られるまちです。JR外房線で都心から日帰りで訪れやすく、公園のほかにも{entity.nearbyLandmark1}や{entity.nearbyLandmark2}など、散策の拠点となる場所があります。</p>
+      </div>
+    </div>
+  </div>
+</section>

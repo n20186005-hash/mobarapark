@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://mobara-park-guide.workers.dev",
+  site: "https://mobarapark.com",
   output: "static",
   integrations: [sitemap()],
   vite: {

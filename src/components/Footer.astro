@@ -1,6 +1,6 @@
 ---
 import Logo from "./Logo.astro";
-import { sources } from "../data/park";
+import { sources, reviews, entity } from "../data/park";
 ---
 
 <footer id="photo-credits" class="scroll-mt-24 bg-[#20302c] pb-10 pt-20 text-white">
@@ -20,6 +20,11 @@ import { sources } from "../data/park";
         <h2 class="text-[0.65rem] font-bold tracking-[0.2em] text-white/70">INFORMATION SOURCES</h2>
         <ul class="mt-5 grid gap-3 text-xs leading-6 text-white/70">
           {sources.map((source) => <li><a href={source.url} target="_blank" rel="noreferrer" class="underline decoration-white/20 underline-offset-4 hover:decoration-white">{source.label}</a></li>)}
+          <li><a href={entity.govtUrl} target="_blank" rel="noreferrer" class="underline decoration-white/20 underline-offset-4 hover:decoration-white">千葉県・茂原市 公式観光ポータル</a></li>
+          <li>
+            <a href={reviews.mapsUrl} target="_blank" rel="noreferrer" class="underline decoration-white/20 underline-offset-4 hover:decoration-white">評価・口コミ：Google マップ（{reviews.count.toLocaleString()} 件）· 同期 {reviews.syncedAt} ↗</a>
+            <p class="mt-2 text-[0.62rem] leading-5 text-white/55">评价 · 同步时间 2026 年 9 月。同步自 Google 地图用户评价，同步时间 2026 年 9 月；版权归原作者与 Google 地图所有。<a href={reviews.mapsUrl} target="_blank" rel="noreferrer" class="font-bold text-white/80 underline underline-offset-4">在谷歌地图查看全部评价 ↗</a></p>
+          </li>
         </ul>
       </div>
     </div>

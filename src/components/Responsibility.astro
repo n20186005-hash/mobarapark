@@ -1,0 +1,29 @@
+---
+const rules = [
+  { en: "CARRY OUT", title: "ごみは持ち帰り", text: "園内にごみ箱がない場合もあります。持ち込んだものは必ず持ち帰りましょう。" },
+  { en: "PROTECT PLANTS", title: "花や木を傷つけない", text: "桜の枝を折る、草花を摘む行為は行わず、次の来園者のためにも美しい景観を守りましょう。" },
+  { en: "KEEP WATER CLEAN", title: "湖への投棄をしない", text: "弁天湖へのごみや餌やりは生態系を損ないます。ペットのふんの処理もお願いします。" },
+  { en: "CONSIDER OTHERS", title: "他者への配慮", text: "大声、長時間の場所取り、ドローン等は周囲への配慮を。静かな散策を楽しむ人を妨げないよう。" },
+  { en: "ACCESSIBILITY", title: "バリアフリーの理解", text: "車いすやベビーカー、高齢の方への配慮。平坦な園路と休憩所を活用しましょう。" },
+  { en: "PETS", title: "ペットの同伴", text: "リードをつけ、他の来園者への配慮と清掃をお願いします。" },
+];
+---
+
+<section id="responsibility" class="section-pad bg-[#263832] text-white">
+  <div class="container-site">
+    <div class="max-w-3xl">
+      <p class="eyebrow !text-[#efb9b2]">VISITOR RESPONSIBILITY</p>
+      <h2 class="serif mt-5 text-[clamp(2.4rem,5vw,4.4rem)] font-medium leading-[1.25]">みんなで守る、湖畔のマナー。</h2>
+      <p class="mt-6 text-sm leading-8 text-white/60">非営利の科普サイトとして、未来の来園者のために。公園を長く良い状態で楽しむための心得です。</p>
+    </div>
+    <div class="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] bg-white/12 sm:grid-cols-2 lg:grid-cols-3">
+      {rules.map((r) => (
+        <article class="bg-[#263832] p-7 sm:p-9">
+          <p class="text-[0.6rem] font-bold tracking-[0.16em] text-[#efb9b2]">{r.en}</p>
+          <h3 class="serif mt-3 text-xl font-semibold">{r.title}</h3>
+          <p class="mt-4 text-xs leading-7 text-white/70">{r.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

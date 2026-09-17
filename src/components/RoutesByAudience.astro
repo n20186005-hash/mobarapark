@@ -1,0 +1,35 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { audienceRoutes, dayPlans } from "../data/guide";
+---
+
+<section id="by-audience" class="section-pad">
+  <div class="container-site">
+    <SectionTitle eyebrow="BY YOUR TRIP" title="旅の組み立て方。" description="誰と、どれくらい歩くか。構成別のすすめと、半日・全日の目安です。" />
+    <div class="mt-14 grid gap-6 lg:grid-cols-3">
+      {audienceRoutes.map((r) => (
+        <article class="rounded-[1.75rem] bg-[#f7f3eb] p-7 sm:p-9">
+          <p class="text-[0.6rem] font-bold tracking-[0.16em] text-vermilion">{r.en}</p>
+          <h3 class="serif mt-3 text-2xl font-semibold">{r.name}</h3>
+          <p class="mt-2 text-xs font-bold text-ink/55">{r.time}</p>
+          <ol class="mt-5 grid gap-2 text-sm">
+            {r.stops.map((s, i) => (
+              <li class="flex items-center gap-3">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-vermilion text-[0.6rem] font-bold text-white">{i + 1}</span>{s}
+              </li>
+            ))}
+          </ol>
+          <p class="mt-5 rounded-2xl bg-paper-deep p-4 text-xs leading-6 text-ink-soft">{r.note}</p>
+        </article>
+      ))}
+    </div>
+    <div class="mt-8 grid gap-px overflow-hidden rounded-[1.75rem] bg-ink/10 sm:grid-cols-2">
+      {dayPlans.map((p) => (
+        <div class="bg-[#f8f5ee] p-7 sm:p-9">
+          <h4 class="serif text-2xl font-semibold">{p.name}</h4>
+          <p class="mt-4 text-sm leading-8 text-ink-soft">{p.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

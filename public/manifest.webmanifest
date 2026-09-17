@@ -1,0 +1,26 @@
+{
+  "name": "茂原公園ガイド | Mobara Park Guide",
+  "short_name": "茂原公園",
+  "description": "千葉県茂原市の茂原公園を歩くための旅行ガイド。弁天湖と弁天橋、桜の見頃、散策コース、駐車場、子ども向け施設、季節の花を案内します。",
+  "lang": "ja",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f0e8",
+  "theme_color": "#9f3e35",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

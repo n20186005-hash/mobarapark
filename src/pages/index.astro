@@ -6,35 +6,55 @@ import Footer from "../components/Footer.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import RouteCard from "../components/RouteCard.astro";
 import ParkMap from "../components/ParkMap.astro";
+import Weather from "../components/Weather.astro";
+import TransportGuide from "../components/TransportGuide.astro";
+import Facilities from "../components/Facilities.astro";
+import RoutesByAudience from "../components/RoutesByAudience.astro";
+import ClimateStrategy from "../components/ClimateStrategy.astro";
+import History from "../components/History.astro";
+import Responsibility from "../components/Responsibility.astro";
 import heroImage from "../assets/photos/mobara-park-panorama.jpg";
 import blossomImage from "../assets/photos/mobara-cherry-blossoms.jpg";
 import springImage from "../assets/photos/mobara-spring-lake.jpg";
 import nightImage from "../assets/photos/mobara-night.jpg";
 import bridgeImage from "../assets/photos/mobara-benten-bridge.jpg";
-import { park, parking } from "../data/park";
+import { park, parking, reviews, entity } from "../data/park";
+import { transport } from "../data/guide";
 import { routes } from "../data/routes";
 import { seasons, faqs } from "../data/seasons";
+
+const heroImageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3b/%E8%8C%82%E5%8E%9F%E5%85%AC%E5%9C%92%E6%A1%9C%E9%A2%A8%E6%99%AF.JPG";
 
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": ["Park", "TouristAttraction"],
-      "@id": `${Astro.site}#park`,
+      "@id": "https://mobarapark.com/#attraction",
       name: park.name,
-      description: "弁天湖と朱色の弁天橋、四季の花を楽しめる千葉県茂原市の都市公園。",
+      alternateName: [entity.fullNameEn, `${entity.fullNameEn} (${entity.cityEn})`],
+      description: `Comprehensive visitor guide to ${park.name} (${entity.fullNameEn}) in ${entity.cityEn}, ${entity.stateEn}, ${entity.countryEn}.`,
+      url: "https://mobarapark.com",
+      image: [heroImageUrl],
+      isAccessibleForFree: true,
       address: {
         "@type": "PostalAddress",
-        postalCode: "297-0029",
-        addressRegion: "千葉県",
-        addressLocality: "茂原市",
         streetAddress: "高師1325-1",
-        addressCountry: "JP",
+        addressLocality: entity.cityEn,
+        addressRegion: entity.stateEn,
+        postalCode: entity.postalCode,
+        addressCountry: entity.countryCode,
       },
-      geo: { "@type": "GeoCoordinates", latitude: park.coordinates.latitude, longitude: park.coordinates.longitude },
-      isAccessibleForFree: true,
-      url: park.officialUrl,
-      image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/%E8%8C%82%E5%8E%9F%E5%85%AC%E5%9C%92%E6%A1%9C%E9%A2%A8%E6%99%AF.JPG",
+      geo: { "@type": "GeoCoordinates", latitude: entity.latitude, longitude: entity.longitude },
+      hasMap: entity.mapsShareUrl,
+      sameAs: [entity.mapsShareUrl, entity.govtUrl, park.officialUrl],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://mobarapark.com" },
+        { "@type": "ListItem", position: 2, name: `${park.name} (${entity.fullNameEn})`, item: "https://mobarapark.com" },
+      ],
     },
     {
       "@type": "FAQPage",
@@ -120,11 +140,13 @@ const structuredData = {
       </div>
     </section>
 
+    <Weather />
+
     <section id="highlights" class="section-pad">
       <div class="container-site">
-        <SectionTitle eyebrow="THREE SCENES" title="はじめて訪れるなら、この三景。" description="水辺から見上げ、高台から見下ろす。弁天湖を中心に視点を変えると、公園の地形と季節がよく見えてきます。" />
+        <SectionTitle eyebrow="THREE SCENES" title="茂原公園の弁天湖｜湖と朱の橋の三景" description="水辺から見上げ、高台から見下ろす。弁天湖を中心に視点を変えると、公園の地形と季節がよく見えてきます。" />
         <div class="mt-16 grid gap-6 lg:grid-cols-12 lg:grid-rows-[310px_310px]">
-          <figure class="group relative overflow-hidden rounded-[1.75rem] lg:col-span-7 lg:row-span-2">
+          <figure id="benten-lake" class="group relative overflow-hidden rounded-[1.75rem] lg:col-span-7 lg:row-span-2">
             <Image src={springImage} alt="桜が咲く弁天湖と朱色の弁天橋" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 58vw" format="webp" quality={82} class="h-full min-h-[440px] w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
             <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>
             <figcaption class="absolute inset-x-0 bottom-0 p-7 text-white sm:p-10"><span class="text-[0.62rem] font-bold tracking-[0.16em] text-sakura">SCENE 01</span><h3 class="serif mt-3 text-3xl sm:text-4xl">弁天湖と弁天橋</h3><p class="mt-4 max-w-lg text-sm leading-7 text-white/70">湖を横切る朱色の橋と弁天堂。水面を含めて眺めることで、茂原公園らしい一枚になります。</p></figcaption>
@@ -204,6 +226,8 @@ const structuredData = {
       </div>
     </section>
 
+    <RoutesByAudience />
+
     <section id="seasons" class="section-pad overflow-hidden bg-[#e9e1d5]">
       <div class="container-site">
         <SectionTitle eyebrow="FLOWER CALENDAR" title="茂原公園の花ごよみ。" description="桜だけではありません。梅、ツツジ、アジサイ、深緑、紅葉へ。季節ごとに湖畔の色がゆっくり変わります。" />
@@ -225,7 +249,9 @@ const structuredData = {
       </div>
     </section>
 
-    <section class="relative overflow-hidden bg-[#171d1b] text-white">
+    <ClimateStrategy />
+
+    <section id="sakura" class="relative overflow-hidden bg-[#171d1b] text-white">
       <div class="grid min-h-[760px] lg:grid-cols-2">
         <div class="relative min-h-[430px] lg:min-h-full">
           <Image src={nightImage} alt="夜桜のライトアップが湖面に映る茂原公園の弁天湖" widths={[640, 960, 1280]} sizes="(max-width: 1023px) 100vw, 50vw" format="webp" quality={82} class="absolute inset-0 h-full w-full object-cover" />
@@ -235,8 +261,8 @@ const structuredData = {
         <div class="flex items-center px-5 py-20 sm:px-12 lg:px-[clamp(3rem,7vw,8rem)]">
           <div class="max-w-xl">
             <p class="eyebrow !text-[#e5a9a3]">SAKURA AT NIGHT</p>
-            <h2 class="serif mt-6 text-balance text-[clamp(2.7rem,5.4vw,5.3rem)] font-medium leading-[1.2]">春、弁天湖は<br/>桜に包まれる。</h2>
-            <p class="mt-7 text-sm leading-8 text-white/62">例年の見頃は3月下旬から4月上旬。弁天湖の周囲では、2,000本以上のソメイヨシノなどが春を彩ります。</p>
+            <h2 class="serif mt-6 text-balance text-[clamp(2.7rem,5.4vw,5.3rem)] font-medium leading-[1.2]">茂原公園の花見｜<br/>春の桜とライトアップ。</h2>
+            <p class="mt-7 text-sm leading-8 text-white/62">例年の見頃は3月下旬から4月上旬。弁天湖の周囲では、2,000本以上のソメイヨシノなどが春を彩り、お花見（花見）の名所として親しまれています。まつり期間中は夜間のライトアップも行われます。</p>
             <div class="mt-10 grid grid-cols-2 gap-px bg-white/12">
               <div class="bg-[#171d1b] py-5 pr-4"><span class="block text-[0.58rem] tracking-[0.14em] text-white/70">TYPICAL SEASON</span><strong class="serif mt-2 block text-xl">3月下旬—4月上旬</strong></div>
               <div class="bg-[#171d1b] py-5 pl-5"><span class="block text-[0.58rem] tracking-[0.14em] text-white/70">TREES</span><strong class="serif mt-2 block text-xl">2,000本以上</strong></div>
@@ -303,7 +329,7 @@ const structuredData = {
 
     <section id="access" class="section-pad">
       <div class="container-site">
-        <SectionTitle eyebrow="ACCESS" title="迷わず着くための案内。" description="駅から歩く、バスを使う、車で向かう。到着後にいちばん近い景色まで、迷いにくい情報をまとめました。" />
+        <SectionTitle eyebrow="ACCESS" title="アクセスと茂原公園の駐車場" description="駅から歩く、バスを使う、車で向かう。到着後にいちばん近い景色まで、迷いにくい情報をまとめました。" />
         <div class="mt-14 grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
           <div class="rounded-[2rem] bg-vermilion p-8 text-white sm:p-10">
             <p class="text-[0.62rem] font-bold tracking-[0.18em] text-white/85">DESTINATION</p>
@@ -341,6 +367,68 @@ const structuredData = {
       </div>
     </section>
 
+    <TransportGuide />
+    <Facilities />
+
+    <section id="reviews" class="section-pad bg-[#e9e1d5]">
+      <div class="container-site">
+        <div class="mx-auto max-w-2xl rounded-[2rem] bg-[#f8f5ee] p-8 shadow-xl shadow-ink/5 sm:p-12">
+          <p class="eyebrow justify-center before:hidden">REVIEWS</p>
+          <div class="mt-6 flex items-end justify-center gap-4">
+            <span class="serif text-6xl font-semibold text-ink sm:text-7xl">{reviews.rating.toFixed(1)}</span>
+            <div class="pb-2">
+              <div class="flex gap-1 text-vermilion" aria-hidden="true">{"★★★★☆"}</div>
+              <p class="mt-1 text-xs font-bold text-ink-soft">Google Maps ユーザー評価（{reviews.count.toLocaleString()} 件）</p>
+            </div>
+          </div>
+          <p class="mt-6 text-center text-xs leading-7 text-ink/70">
+            评分与评价数同步自谷歌地图（Google Maps）用户评价 · 2026 年 9 月 · <a href={reviews.mapsUrl} target="_blank" rel="noreferrer" class="font-bold text-vermilion underline underline-offset-4">点击查看谷歌地图全部评价↗</a>
+          </p>
+          <p class="mt-4 rounded-2xl bg-[#ebe5da] px-5 py-4 text-center text-[0.7rem] leading-6 text-ink/70">
+            同步自 Google 地图用户评价，同步时间 2026 年 9 月；版权归原作者与 Google 地图所有
+          </p>
+          <div class="mt-6 text-center">
+            <a href={reviews.mapsUrl} target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-3 rounded-full bg-vermilion px-7 py-4 text-xs font-bold tracking-[0.08em] text-white transition hover:bg-vermilion-dark">在谷歌地图查看全部评价 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="info" class="section-pad">
+      <div class="container-site grid gap-14 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
+        <div>
+          <p class="eyebrow">VISITOR INFORMATION</p>
+          <h2 class="serif mt-5 text-[clamp(2.2rem,5vw,4.3rem)] font-medium leading-[1.25]">About<br/>茂原公園<br/><span class="text-[0.5em] text-vermilion">Mobara Park</span></h2>
+          <p class="mt-7 max-w-sm text-sm leading-8 text-ink-soft">茂原市の中心にある都市公園。弁天湖と朱色の弁天橋、四季の花を楽しめます。</p>
+        </div>
+        <div class="text-sm leading-8 text-ink-soft">
+          <p>Welcome to <strong class="text-ink">茂原公園</strong>, widely recognized as the central <strong class="text-ink">Mobara Park</strong>. Located in the heart of <strong class="text-ink">Mobara</strong>, <strong class="text-ink">Chiba</strong>, <strong class="text-ink">Japan</strong>, this destination serves as a primary hub for travelers visiting the region.</p>
+
+          <p class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-bold text-ink">
+            <span>茂原公園</span><span class="text-vermilion">→</span><span>茂原市 Mobara</span><span class="text-vermilion">→</span><span>千葉県 Chiba</span><span class="text-vermilion">→</span><span>日本 Japan</span>
+          </p>
+
+          <h2 class="serif mt-12 text-2xl font-semibold text-ink sm:text-3xl">Location &amp; How to Visit Mobara Park in Mobara</h2>
+          <p class="mt-4">茂原公園 (Mobara Park) is in Mobara, Chiba, Japan — about 30 minutes on foot from JR Mobara Station. Admission and parking are free.</p>
+          <div class="mt-6 overflow-hidden rounded-2xl border border-ink/10">
+            <iframe src={entity.mapsEmbedSrc} width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="茂原公園 (Mobara Park) on Google Maps"></iframe>
+          </div>
+          <p class="mt-4 text-xs">
+            For official updates and regional tourism information, visit
+            <a href={entity.govtUrl} target="_blank" rel="noopener noreferrer" class="font-bold text-vermilion underline underline-offset-4"> Chiba / Mobara Official Tourism Portal ↗</a>.
+          </p>
+
+          <h2 class="serif mt-12 text-2xl font-semibold text-ink sm:text-3xl">Landmarks &amp; Attractions Around Mobara Park</h2>
+          <p class="mt-4">When visiting <strong class="text-ink">茂原公園</strong>, visitors can easily explore surrounding historical landmarks and points of interest, including <strong class="text-ink">{entity.nearbyLandmark1}</strong> and <strong class="text-ink">{entity.nearbyLandmark2}</strong>.</p>
+
+          <h2 class="serif mt-12 text-2xl font-semibold text-ink sm:text-3xl">History &amp; Significance of 茂原公園</h2>
+          <p class="mt-4">茂原公園は弁天湖を中心に整備された都市公園で、日本さくら名所100選にも選ばれる桜の名所です。2,000本以上のソメイヨシノが春の風景を彩り、四季を通じて散策が楽しめます。</p>
+        </div>
+      </div>
+    </section>
+
+    <History />
+
     <section class="section-pad bg-[#ebe4da]">
       <div class="container-site grid gap-14 lg:grid-cols-[.65fr_1.35fr] lg:gap-20">
         <div>
@@ -356,6 +444,8 @@ const structuredData = {
         </div>
       </div>
     </section>
+
+    <Responsibility />
 
     <section class="relative overflow-hidden bg-vermilion px-5 py-20 text-center text-white sm:py-28">
       <div class="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div><div class="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"></div>
